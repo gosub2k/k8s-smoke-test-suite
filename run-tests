@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Run the smoke test suite. Forwards any args to pytest (e.g. `./run-tests -k nfs`).
+set -euo pipefail
+cd "$(dirname "$(readlink -f "$0")")"
+exec uv run --quiet pytest "$@"
