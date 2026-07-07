@@ -32,7 +32,7 @@ cp_node_names() {
 }
 
 @test "etcd componentstatus is Healthy" {
-  run kubectl get componentstatuses -o json
+  run --separate-stderr kubectl get componentstatuses -o json
   [[ "$status" -eq 0 ]] || skip "componentstatuses unavailable: $output"
   local names
   names=$(jq -r '.items[] | select(.metadata.name | startswith("etcd")) | .metadata.name' \
@@ -47,7 +47,7 @@ cp_node_names() {
 }
 
 @test "controller-manager and scheduler are Healthy" {
-  run kubectl get componentstatuses -o json
+  run --separate-stderr kubectl get componentstatuses -o json
   [[ "$status" -eq 0 ]] || skip "componentstatuses unavailable: $output"
   for component in controller-manager scheduler; do
     h=$(jq -r --arg c "$component" \
